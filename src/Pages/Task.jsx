@@ -56,7 +56,7 @@ const TaskPage = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(newTask),
+                body: JSON.stringify({ ...newTask, priority: newTask.priority.toLowerCase() }), // Convert priority to lowercase
             });
 
             if (!response.ok) {
@@ -93,7 +93,7 @@ const TaskPage = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(newTask),
+                body: JSON.stringify({ ...newTask, priority: newTask.priority.toLowerCase() }), // Convert priority to lowercase
             });
 
             if (!response.ok) {
@@ -123,9 +123,9 @@ const TaskPage = () => {
                 <input type="text" name="description" value={newTask.description} placeholder="Description" onChange={handleChange} />
                 <select name="priority" value={newTask.priority} onChange={handleChange}>
                     <option value="">Select Priority</option>
-                    {[...new Set(tasks.map(task => task.priority))].map(priority => (
-                        <option key={priority} value={priority}>{priority}</option>
-                    ))}
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
                 </select>
                 <input type="text" name="category" value={newTask.category} placeholder="Category" onChange={handleChange} />
                 <button className="submit-button" onClick={selectedTaskId ? handleUpdateTask : handleAddTask}>{selectedTaskId ? 'Update Task' : 'Add Task'}</button>
@@ -144,9 +144,9 @@ const TaskPage = () => {
                     <label htmlFor="priority">Priority:</label>
                     <select id="priority" value={selectedPriority} onChange={e => setSelectedPriority(e.target.value)}>
                         <option value="All Priorities">All Priorities</option>
-                        {[...new Set(tasks.map(task => task.priority))].map(priority => (
-                            <option key={priority} value={priority}>{priority}</option>
-                        ))}
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
                     </select>
                 </div>
             </div>
